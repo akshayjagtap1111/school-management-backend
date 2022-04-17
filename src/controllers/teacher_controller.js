@@ -67,4 +67,30 @@ router.post("", async (req, res) => {
   }
 });
 
+router.delete("/:class_id", async (req, res) => {
+    try {
+      await teacher.findByIdAndDelete(req.params.class_id);
+  
+      res.status(200).send("deleted");
+    } catch (e) {
+      res.send(e.message);
+    }
+  });
+  
+  
+  router.patch("/:id", async (req, res) => {
+  
+      try {
+         
+        const teacher_data = await teacher.findByIdAndUpdate(req.params.id, req.body, {
+          new: true,
+        })
+          .lean()
+          .exec();
+        res.status(201).send(teacher_data);
+      } catch (err) {
+        return res.status(500).send(err.message);
+      }
+    });
+
 module.exports = router;
