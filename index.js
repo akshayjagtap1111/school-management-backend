@@ -6,6 +6,9 @@ const body_parser = require("body-parser")
 const mongoose = require("mongoose");
 const {register, login} = require("./src/controllers/auth_controller")
 
+const teacher_controller = require("./src/controllers/teacher_controller")
+const class_controller = require("./src/controllers/class_controller")
+
 const connect = require("./src/config/db")
 const app = express();
 
@@ -18,6 +21,9 @@ app.get("/",(req,res)=>{
 app.post("/register",register);
 
 app.post("/login",login);
+
+app.use("/teacher",teacher_controller)
+app.use("/class",class_controller)
 
 
 let  port = process.env.PORT || 3000;
